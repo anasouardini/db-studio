@@ -1,0 +1,34 @@
+{
+  "name": "db-studio",
+  "version": "0.1.0",
+  "private": false,
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "start": "./bin/start.js"
+  },
+  "scripts": {
+    "initDev": "pnpm install && pnpm --filter='./packages/**/*' --parallel run setup",
+    "setupHooks": "cp -r ./hooks/* ./.git/hooks",
+    "preCommit": "pnpm testOnce && pnpm lint && ./scripts/format-staged.sh",
+    "format": "prettier --write . --cache",
+    "testOnce": "pnpm --filter='./packages/**/*' --parallel run testOnce",
+    "formatCheck": "prettier . --check || exit 0",
+    "lint": "pnpm --filter='./packages/**/*' --parallel run lint",
+    "build": "pnpm --filter='./packages/**/*' --parallel run build",
+    "ci": "pnpm run formatCheck && pnpm run lint && pnpm run testOnce && pnpm run build",
+    "SEPARATOR1": "------------- DELIVERY-RELATED STUFF ------------",
+    "createRelease": "npx changeset add && npx changeset version && git add . && git commit -m 'chore(release): create a release' --no-verify",
+    "pushReleaseGit": "git push origin main && git push origin --tags",
+    "release": "npm run ci && npm run createRelease && npx changeset publish && npm run pushReleaseGit"
+  },
+  "engines": {
+    "node": "21"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.1.1"
+  }
+}
