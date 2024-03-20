@@ -1,0 +1,7 @@
+{
+  "verbose": false,
+  "watch": ["./src"],
+  "execMap": {
+    "ts": "ts-node -T -r tsconfig-paths/register ./src/main.ts"
+  }
+}
